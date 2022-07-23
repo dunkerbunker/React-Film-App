@@ -9,7 +9,6 @@ import { Actors, MovieInformation, Movies, NavBar, Profile } from '.';
 // eslint-disable-next-line react/function-component-definition
 const App = () => {
   const classes = useStyles();
-
   return (
     <div className={classes.root}>
       <CssBaseline />
