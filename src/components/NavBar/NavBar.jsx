@@ -4,7 +4,7 @@ import { Menu, AccountCircle, Brightness4, Brightness7 } from '@mui/icons-materi
 import { useTheme } from '@mui/material/styles';
 
 import useStyles from './styles';
-import { Sidebar } from '..';
+import { Sidebar, Search } from '..';
 
 // eslint-disable-next-line react/function-component-definition
 const NavBar = () => {
@@ -33,7 +33,7 @@ const NavBar = () => {
             {theme.palette.mode === 'dark' ? <Brightness7 /> : <Brightness4 />}
           </IconButton>
           {!isMobile && (
-            'Search...'
+            <Search />
           )}
           <div>
             {!isAuthenticated ? (
@@ -60,7 +60,7 @@ const NavBar = () => {
             )}
           </div>
           {isMobile && (
-            'Search...'
+            <Search />
           )}
         </Toolbar>
       </AppBar>
