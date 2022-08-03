@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 
 import { useGetMoviesQuery } from '../../services/TMDB';
 import { MovieList } from '..';
-import { selectGenteOrCategory } from '../../features/currentGenreOrCategory';
+import { selectGenreOrCategory } from '../../features/currentGenreOrCategory';
 
 // eslint-disable-next-line react/function-component-definition
 const Movies = () => {
