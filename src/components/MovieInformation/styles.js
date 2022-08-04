@@ -10,14 +10,23 @@ export default makeStyles((theme) => ({
             flexWrap: 'wrap',
         },
     },
+    posterContainer: {
+        justifyContent: 'center',
+        [theme.breakpoints.down('lg')]: {
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+        },
+    },
     poster: {
         borderRadius: '20px',
         boxShadow: '0.5em 1em 1em rgb(64,64,70)',
         width: '80%',
-        [theme.breakpoints.down('md')]: {
+        [theme.breakpoints.down('lg')]: {
             margin: '0 auto',
             width: '50%',
-            height: '350px',
+            height: '500px',
+            marginBottom: '50px',
         },
         [theme.breakpoints.down('sm')]: {
             margin: '0 auto',
@@ -59,5 +68,18 @@ export default makeStyles((theme) => ({
         [theme.breakpoints.down('sm')]: {
             flexDirection: 'column',
         },
-    }
+    },
+    modal: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    video: {
+        width: '50%',
+        height: '50%',
+        [theme.breakpoints.down('sm')]: {
+            width: '90%',
+            height: '90%',
+        },
+    },
 }));
