@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal, Typography, Button, ButtonGroup, Grid, Box, CircularProgress, useMediaQuery, Rating } from '@mui/material';
-import { Movie as MovieIcon, Theaters, Language, PlusOne, Favourite, FavouriteBorderOutlined, Remove, ArrowBack } from '@mui/icons-material';
+import { Movie as MovieIcon, Theaters, Language, PlusOne, Favorite, FavoriteBorderOutlined, Remove, ArrowBack } from '@mui/icons-material';
 import { Link, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
@@ -16,6 +16,17 @@ const MovieInformation = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const { data, isFetching, error } = useGetMovieQuery(id);
+
+  const isMovieFavorited = true;
+  const isMovieWatchlisted = true;
+
+  const addToFavourites = () => {
+
+  };
+
+  const addToWatchlist = () => {
+
+  };
 
   if(isFetching) {
     return (
@@ -46,7 +57,7 @@ const MovieInformation = () => {
         <Typography variant="h3" align="center" gutterBottom>
           {data?.title} ({data?.release_date?.split('-')[0]})
         </Typography>
-        <Typography variant="h3" align="center" gutterBottom>
+        <Typography variant="h5" align="center" gutterBottom>
           {data?.tagline}
         </Typography>
         <Grid item className={classes.containerSpaceAround}>
@@ -73,7 +84,7 @@ const MovieInformation = () => {
               onClick={() => dispatch(selectGenreOrCategory(genre.id))}
             >
               <img src={genreIcons[genre.name.toLowerCase()]} className={classes.genreImage} height={30} />
-              <Typography color="textPrimary" variant='title1'>
+              <Typography color="textPrimary" variant='subtitle1'>
                 {genre?.name}
               </Typography>
             </Link>
@@ -111,6 +122,38 @@ const MovieInformation = () => {
               </Grid>
               )
             )).slice(0, 6)}
+        </Grid>
+        <Grid item container style={{marginTop: '2rem'}}>
+          <div className={classes.buttonsContainer}>
+            <Grid item xs={12} sm={6} className={classes.buttonsContainer}>
+                <ButtonGroup size="medium" variant="outlined">
+                  <Button target="_blank" rel="noopener noreferrer" href={data?.homepage} endIcon={<Language />}>
+                    Website
+                  </Button>
+                  <Button target="_blank" rel="noopener noreferrer" href={`https://www.imdb.com/title/${data?.imdb_id}`} endIcon={<MovieIcon />}>
+                    IMDB
+                  </Button>
+                  <Button onClick={() => {}} href="#" endIcon={<Theaters />}>
+                    Trailer
+                  </Button>
+                </ButtonGroup>
+            </Grid>
+            <Grid item xs={12} sm={6} className={classes.buttonsContainer}>
+                <ButtonGroup size="medium" variant="outlined">
+                  <Button onClick={addToFavourites} endIcon={isMovieFavorited ? <FavoriteBorderOutlined /> : <Favorite />}>
+                    {isMovieFavorited ? 'Unfavourite' : 'Favourite'}
+                  </Button>
+                  <Button onClick={addToWatchlist} endIcon={isMovieWatchlisted ? <Remove /> : <PlusOne />}>
+                    Watchlist
+                  </Button>
+                  <Button endIcon={<ArrowBack />} sx={{borderColor: 'primary.main'}}>
+                    <Typography  style={{ textDecoration: 'none' }} component={Link} to="/" color="inherit" variant="subtitle2">
+                      Back
+                    </Typography>
+                  </Button>
+                </ButtonGroup>
+            </Grid>
+          </div>
         </Grid>
       </Grid>
     </Grid>
