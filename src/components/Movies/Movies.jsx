@@ -3,7 +3,7 @@ import { Box, CircularProgress, useMediaQuery, Typography } from '@mui/material'
 import { useSelector } from 'react-redux';
 
 import { useGetMoviesQuery } from '../../services/TMDB';
-import { MovieList } from '..';
+import { MovieList, Pagination } from '..';
 import { selectGenreOrCategory } from '../../features/currentGenreOrCategory';
 
 // eslint-disable-next-line react/function-component-definition
@@ -35,7 +35,11 @@ const Movies = () => {
   if (error) return 'Error';
 
   return (
-    <MovieList movies={data} />
+    <div>
+      <MovieList movies={data} />
+      <Pagination currentPage={page} setPage={setPage} totalPages={data.total_pages} />
+    </div>
+    
   );
 };
 
