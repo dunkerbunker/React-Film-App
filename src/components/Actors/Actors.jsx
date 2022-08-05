@@ -5,7 +5,7 @@ import { ArrowBack } from '@mui/icons-material';
 
 import { useGetActorDetailsQuery, useGetMoviesByActorIdQuery } from '../../services/TMDB';
 import useStyles from './styles';
-import { MovieList } from '..';
+import { MovieList, Pagination } from '..';
 
 // use params to get actor id
 // new redux toolkit query to get actor details
@@ -71,6 +71,7 @@ const Actors = () => {
         <Typography variant="h2" gutterBottom align='center'>
           {movies && <MovieList movies={movies} numberOfMovies={12} />}
         </Typography>
+        <Pagination currentPage={page} setPage={setPage} totalPages={data?.total_pages} />
       </Box>
     </>
   );
