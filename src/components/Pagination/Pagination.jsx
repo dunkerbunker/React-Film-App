@@ -3,6 +3,7 @@ import { Typography, Button } from '@mui/material';
 
 import useStyles from './styles';
 
+// eslint-disable-next-line react/function-component-definition
 const Pagination = ({ currentPage, totalPages, setPage }) => {
     const classes = useStyles();
 

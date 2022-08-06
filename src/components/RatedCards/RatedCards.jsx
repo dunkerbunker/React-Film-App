@@ -4,6 +4,7 @@ import { Typography, Box } from '@mui/material';
 import useStyles from './styles';
 import { Movie } from '..';
 
+// eslint-disable-next-line react/function-component-definition
 const RatedCards = ({ title, data }) => {
     const classes = useStyles();
 
