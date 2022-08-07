@@ -18,16 +18,16 @@ const useAlan = () => {
             key: '302f8fc4bca8f27dab8682f8a086e77a2e956eca572e1d8b807a3e2338fdd0dc/stage',
             onCommand: ({ command, mode, genres, genreOrCategory, query }) => {
               if(command === 'chooseGenre') {
-                const foundGenre = genres.find((g) => g.toLowerCase() === genreOrCategory.toLowerCase());
+                const foundGenre = genres.find((g) => g.name.toLowerCase() === genreOrCategory.toLowerCase());
                 
                 // only if genre
                 if (foundGenre) {
                   history.push('/');
-                  useDispatch(selectGenreOrCategory(foundGenre.id));
+                  dispatch(selectGenreOrCategory(foundGenre.id));
                 } else {
                   const category = genreOrCategory.startsWith("top") ? 'top_rated' : genreOrCategory;
                   history.push('/');
-                  useDispatch(selectGenreOrCategory(category));
+                  dispatch(selectGenreOrCategory(category));
                 }
               } else if (command === 'changeMode') {
                 if (mode === 'light') {
@@ -41,11 +41,11 @@ const useAlan = () => {
                 localStorage.clear();
                 history.push('/');
               } else if (command === 'search') {
-                useDispatch(searchMovie(query));
+                dispatch(searchMovie(query));
               }
             }
         });
       }, []);
-}
+};
 
 export default useAlan;
