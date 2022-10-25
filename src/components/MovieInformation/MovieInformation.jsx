@@ -21,9 +21,9 @@ const MovieInformation = () => {
   const [open, setOpen] = useState(false);
 
   const { data, isFetching, error } = useGetMovieQuery(id);
-  const { data: favoriteMovies } = useGetListQuery({ listName: 'favorite/movies', accountId: user.id, sessionId: localStorage.getItem('session_id'), page: 1});
-  const { data: watchlistMovies } = useGetListQuery({ listName: 'watchlist/movies', accountId: user.id, sessionId: localStorage.getItem('session_id'), page: 1});
-  const { data: recommendations, isFetching: isRecommendationsFetching } = useGetRecommendationsQuery({list: '/recommendations', movie_id: id});
+  const { data: favoriteMovies } = useGetListQuery({ listName: 'favorite/movies', accountId: user.id, sessionId: localStorage.getItem('session_id'), page: 1 });
+  const { data: watchlistMovies } = useGetListQuery({ listName: 'watchlist/movies', accountId: user.id, sessionId: localStorage.getItem('session_id'), page: 1 });
+  const { data: recommendations, isFetching: isRecommendationsFetching } = useGetRecommendationsQuery({ list: '/recommendations', movie_id: id });
 
   const [isMovieFavorited, setIsMovieFavorited] = useState(false);
   const [isMovieWatchlisted, setIsMovieWatchlisted] = useState(false);
@@ -56,26 +56,26 @@ const MovieInformation = () => {
     setIsMovieWatchlisted((prev) => !prev);
   };
 
-  if(isFetching) {
+  if (isFetching) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center">
         <CircularProgress size="8rem" />
       </Box>
-    )
+    );
   }
 
-  if(error) {
+  if (error) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center">
         <Link to="/">Something has gone wrong. Go Back.</Link>
       </Box>
-    )
+    );
   }
 
   return (
     <Grid container className={classes.containerSpaceAround}>
       <Grid item sm={12} lg={4} className={classes.posterContainer}>
-        <img 
+        <img
           className={classes.poster}
           src={`https://image.tmdb.org/t/p/w500/${data?.poster_path}`}
           alt={data?.title}
@@ -91,7 +91,7 @@ const MovieInformation = () => {
         <Grid item className={classes.containerSpaceAround}>
           <Box display="flex" align="center">
             <Rating readOnly value={data?.vote_average / 2} />
-            <Typography variant="subtitle1" gutterBottom style={{marginLeft: "10px"}}>
+            <Typography variant="subtitle1" gutterBottom style={{ marginLeft: '10px' }}>
               {data?.vote_average} / 10
             </Typography>
           </Box>
@@ -101,81 +101,82 @@ const MovieInformation = () => {
         </Grid>
         <Grid item className={classes.genresContainer}>
           {data?.genres?.map((genre, i) => (
-            <Link 
-              key={genre.name} 
-              className={classes.links} 
-              to="/" 
+            <Link
+              key={genre.name}
+              className={classes.links}
+              to="/"
               onClick={() => dispatch(selectGenreOrCategory(genre.id))}
             >
               <img src={genreIcons[genre.name.toLowerCase()]} className={classes.genreImage} height={30} />
-              <Typography color="textPrimary" variant='subtitle1'>
+              <Typography color="textPrimary" variant="subtitle1">
                 {genre?.name}
               </Typography>
             </Link>
           ))}
         </Grid>
-        <Typography variant="h5" gutterBottom style={{marginTop: '10px'}}>
-            Overview
+        <Typography variant="h5" gutterBottom style={{ marginTop: '10px' }}>
+          Overview
         </Typography>
-        <Typography style={{marginBottom: '2rem'}}>
+        <Typography style={{ marginBottom: '2rem' }}>
           {data?.overview}
         </Typography>
         <Typography variant="h5" gutterBottom>
-            Top Cast
+          Top Cast
         </Typography>
         <Grid item container spacing={2}>
-            {data && data.credits?.cast?.map((cast, i) => (
-              cast.profile_path && (
-                <Grid 
-                item 
-                key={cast.id} 
-                sx={4} 
-                md={2} 
-                component={Link} 
-                to={`/actors/${cast.id}`} 
-                style={{textDecoration: 'none'}}
-              >
-                <img className={classes.castImage} 
-                  src={`https://image.tmdb.org/t/p/w500/${cast.profile_path}`} 
-                  alt={cast.name} 
-                />
-                <Typography color="textPrimary">{cast?.name}</Typography>
-                <Typography color="textSecondary">
-                  {cast?.character?.split('/')[0]}
-                </Typography>
-              </Grid>
-              )
-            )).slice(0, 6)}
+          {data && data.credits?.cast?.map((cast, i) => (
+            cast.profile_path && (
+            <Grid
+              item
+              key={cast.id}
+              sx={4}
+              md={2}
+              component={Link}
+              to={`/actors/${cast.id}`}
+              style={{ textDecoration: 'none' }}
+            >
+              <img
+                className={classes.castImage}
+                src={`https://image.tmdb.org/t/p/w500/${cast.profile_path}`}
+                alt={cast.name}
+              />
+              <Typography color="textPrimary">{cast?.name}</Typography>
+              <Typography color="textSecondary">
+                {cast?.character?.split('/')[0]}
+              </Typography>
+            </Grid>
+            )
+          )).slice(0, 6)}
         </Grid>
-        <Grid item container style={{marginTop: '2rem'}}>
+        <Grid item container style={{ marginTop: '2rem' }}>
           <div className={classes.buttonsContainer}>
             <Grid item xs={12} sm={6} className={classes.buttonsContainer}>
-                <ButtonGroup size="medium" variant="outlined">
-                  <Button target="_blank" rel="noopener noreferrer" href={data?.homepage} endIcon={<Language />}>
-                    Website
-                  </Button>
-                  <Button target="_blank" rel="noopener noreferrer" href={`https://www.imdb.com/title/${data?.imdb_id}`} endIcon={<MovieIcon />}>
-                    IMDB
-                  </Button>
-                  <Button onClick={() => setOpen(true)} href="#" endIcon={<Theaters />}>
-                    Trailer
-                  </Button>
-                </ButtonGroup>
+              <ButtonGroup size="medium" variant="outlined">
+                <Button target="_blank" rel="noopener noreferrer" href={data?.homepage} endIcon={<Language />}>
+                  Website
+                </Button>
+                <Button target="_blank" rel="noopener noreferrer" href={`https://www.imdb.com/title/${data?.imdb_id}`} endIcon={<MovieIcon />}>
+                  IMDB
+                </Button>
+                <Button onClick={() => setOpen(true)} href="#" endIcon={<Theaters />}>
+                  Trailer
+                </Button>
+              </ButtonGroup>
             </Grid>
             <Grid item xs={12} sm={6} className={classes.buttonsContainer}>
-                <ButtonGroup size="medium" variant="outlined">
-                  <Button onClick={addToFavorites} endIcon={isMovieFavorited ? <FavoriteBorderOutlined /> : <Favorite />}>
-                    {isMovieFavorited ? 'Unfavourite' : 'Favourite'}
-                  </Button>
-                  <Button onClick={addToWatchlist} endIcon={isMovieWatchlisted ? <Remove /> : <PlusOne />}>
-                    Watchlist
-                  </Button>
-                  <Button endIcon={<ArrowBack />} sx={{borderColor: 'primary.main'}}>
-                    <Typography  style={{ textDecoration: 'none' }} component={Link} to="/" color="inherit" variant="subtitle2">
-                      Back
-                    </Typography>
-                  </Button>
-                </ButtonGroup>
+              <ButtonGroup size="medium" variant="outlined">
+                <Button onClick={addToFavorites} endIcon={isMovieFavorited ? <FavoriteBorderOutlined /> : <Favorite />}>
+                  {isMovieFavorited ? 'Unfavourite' : 'Favourite'}
+                </Button>
+                <Button onClick={addToWatchlist} endIcon={isMovieWatchlisted ? <Remove /> : <PlusOne />}>
+                  Watchlist
+                </Button>
+                <Button endIcon={<ArrowBack />} sx={{ borderColor: 'primary.main' }}>
+                  <Typography style={{ textDecoration: 'none' }} component={Link} to="/" color="inherit" variant="subtitle2">
+                    Back
+                  </Typography>
+                </Button>
+              </ButtonGroup>
             </Grid>
           </div>
         </Grid>
@@ -184,11 +185,10 @@ const MovieInformation = () => {
         <Typography variant="h3" gutterBottom align="center">
           You might also like:
         </Typography>
-         {/* loop though recommended movies */}
-         {recommendations
+        {/* loop though recommended movies */}
+        {recommendations
           ? <MovieList movies={recommendations} numberOfMovies={12} />
-          : <Box display="flex" justifyContent="center" alignItems="center">Sorry, no recommendations available.</Box>
-         }
+          : <Box display="flex" justifyContent="center" alignItems="center">Sorry, no recommendations available.</Box>}
       </Box>
       <Modal
         closeAfterTransition
@@ -197,11 +197,11 @@ const MovieInformation = () => {
         onClose={() => setOpen(false)}
       >
         {data?.videos?.results?.length > 0 && (
-          <iframe 
+          <iframe
             autoPlay
             className={classes.video}
             frameBorder="0"
-            title='Trailer'
+            title="Trailer"
             src={`https://www.youtube.com/embed/${data.videos.results[0].key}`}
             allow="autoPlay"
           />
